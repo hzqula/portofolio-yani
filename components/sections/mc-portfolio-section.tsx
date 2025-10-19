@@ -1,9 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import CarouselNavigation from "@/components/carousel-navigation";
-import { containerVariants, itemVariants } from "@/lib/animation-variants";
+import { motion, AnimatePresence, PanInfo } from "framer-motion";
 
 interface MCEvent {
   id: number;
@@ -46,6 +44,27 @@ const mcEvents: MCEvent[] = [
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+    },
+  },
+};
+
 export default function MCPortfolioSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
@@ -58,10 +77,22 @@ export default function MCPortfolioSection() {
     setCurrentIndex((prev) => (prev === mcEvents.length - 1 ? 0 : prev + 1));
   };
 
+  const handleDragEnd = (event: any, info: PanInfo) => {
+    const swipeThreshold = 50;
+
+    if (info.offset.x > swipeThreshold) {
+      // Swipe right - go to previous
+      handlePrev();
+    } else if (info.offset.x < -swipeThreshold) {
+      // Swipe left - go to next
+      handleNext();
+    }
+  };
+
   const currentEvent = mcEvents[currentIndex];
 
   return (
-    <section className="w-full h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 bg-white py-12 sm:py-0">
+    <section className="w-full min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 bg-white py-12">
       <motion.div
         className="w-full max-w-7xl"
         variants={containerVariants}
@@ -82,11 +113,10 @@ export default function MCPortfolioSection() {
           </p>
         </motion.div>
 
-        {/* Carousel Container */}
-        <div className="relative flex items-center justify-center gap-3 sm:gap-4 md:gap-8">
+        {/* Desktop: Carousel with side navigation */}
+        <div className="hidden md:flex relative items-center justify-center gap-8">
           <CarouselNavigation direction="prev" onClick={handlePrev} />
 
-          {/* Main Image Display */}
           <motion.div className="flex-1 max-w-4xl" variants={itemVariants}>
             <AnimatePresence mode="wait">
               <motion.div
@@ -105,23 +135,10 @@ export default function MCPortfolioSection() {
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
 
-                {/* Mobile: Always Show Info Overlay at Bottom */}
-                <div className="md:hidden absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/60 to-transparent p-4 sm:p-6">
-                  <h3 className="text-white text-lg sm:text-xl font-bold mb-1">
-                    {currentEvent.title}
-                  </h3>
-                  <p className="text-gray-200 text-xs sm:text-sm mb-2 line-clamp-2">
-                    {currentEvent.description}
-                  </p>
-                  <p className="text-gray-300 text-xs sm:text-sm">
-                    {currentEvent.date}
-                  </p>
-                </div>
-
                 {/* Desktop: Hover Overlay */}
                 {isHovered && (
                   <motion.div
-                    className="hidden md:flex absolute inset-0 bg-black/70 flex-col items-center justify-center p-6 lg:p-8"
+                    className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center p-6 lg:p-8"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -143,7 +160,7 @@ export default function MCPortfolioSection() {
 
             {/* Event Info Below Image - Desktop Only */}
             <motion.div
-              className="hidden md:block mt-6 text-center"
+              className="mt-6 text-center"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
@@ -158,6 +175,58 @@ export default function MCPortfolioSection() {
           </motion.div>
 
           <CarouselNavigation direction="next" onClick={handleNext} />
+        </div>
+
+        {/* Mobile: Swipeable Image */}
+        <div className="md:hidden flex flex-col items-center">
+          <motion.div
+            className="w-full max-w-2xl touch-pan-y"
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.2}
+            onDragEnd={handleDragEnd}
+          >
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentEvent.id}
+                className="relative overflow-hidden rounded-lg bg-gray-100 aspect-video shadow-lg"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.3 }}
+              >
+                <img
+                  src={currentEvent.image || "/placeholder.svg"}
+                  alt={currentEvent.title}
+                  className="w-full h-full object-cover"
+                />
+
+                {/* Mobile: Always Show Info Overlay at Bottom */}
+                <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/60 to-transparent p-4 sm:p-6">
+                  <h3 className="text-white text-lg sm:text-xl font-bold mb-1">
+                    {currentEvent.title}
+                  </h3>
+                  <p className="text-gray-200 text-xs sm:text-sm mb-2 line-clamp-2">
+                    {currentEvent.description}
+                  </p>
+                  <p className="text-gray-300 text-xs sm:text-sm">
+                    {currentEvent.date}
+                  </p>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </motion.div>
+
+          {/* Mobile: Navigation buttons below */}
+          <div className="flex items-center justify-center gap-6 mt-6">
+            <CarouselNavigation direction="prev" onClick={handlePrev} />
+            <CarouselNavigation direction="next" onClick={handleNext} />
+          </div>
+
+          {/* Swipe indicator */}
+          <p className="text-xs text-gray-400 mt-4 text-center">
+            Swipe left or right to browse
+          </p>
         </div>
 
         {/* Carousel Indicators */}
@@ -209,5 +278,46 @@ export default function MCPortfolioSection() {
         </motion.div>
       </motion.div>
     </section>
+  );
+}
+
+function CarouselNavigation({
+  direction,
+  onClick,
+}: {
+  direction: "prev" | "next";
+  onClick: () => void;
+}) {
+  return (
+    <motion.button
+      onClick={onClick}
+      className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all shadow-sm"
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.95 }}
+      aria-label={direction === "prev" ? "Previous event" : "Next event"}
+    >
+      <svg
+        className="w-5 h-5 sm:w-6 sm:h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        {direction === "prev" ? (
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M15 19l-7-7 7-7"
+          />
+        ) : (
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 5l7 7-7 7"
+          />
+        )}
+      </svg>
+    </motion.button>
   );
 }

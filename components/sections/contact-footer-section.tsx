@@ -249,9 +249,6 @@ export default function ContactFooterSection() {
             variants={itemVariants}
           >
             <p>© {new Date().getFullYear()} Ramadayani. All rights reserved.</p>
-            <p className="mt-2 text-gray-600">
-              Built with ❤️ using Next.js & Tailwind CSS
-            </p>
           </motion.div>
         </motion.div>
       </motion.div>

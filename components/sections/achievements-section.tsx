@@ -1,9 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import CarouselNavigation from "@/components/carousel-navigation";
-import { containerVariants, itemVariants } from "@/lib/animation-variants";
+import { motion, AnimatePresence, PanInfo } from "framer-motion";
 
 interface Achievement {
   id: number;
@@ -66,6 +64,27 @@ const achievements: Achievement[] = [
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+    },
+  },
+};
+
 export default function AchievementsSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -81,25 +100,26 @@ export default function AchievementsSection() {
     );
   };
 
+  const handleDragEnd = (event: any, info: PanInfo) => {
+    const swipeThreshold = 50;
+
+    if (info.offset.x > swipeThreshold) {
+      handlePrev();
+    } else if (info.offset.x < -swipeThreshold) {
+      handleNext();
+    }
+  };
+
   const getVisibleAchievements = () => {
     const visible = [];
-    const count =
-      typeof window !== "undefined"
-        ? window.innerWidth < 768
-          ? 1
-          : window.innerWidth < 1024
-          ? 2
-          : 3
-        : 3;
-
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < 3; i++) {
       visible.push(achievements[(currentIndex + i) % achievements.length]);
     }
     return visible;
   };
 
   return (
-    <section className="w-full h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 bg-gray-50 py-12 sm:py-0">
+    <section className="w-full min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 bg-gray-50 py-12">
       <motion.div
         className="w-full max-w-7xl"
         variants={containerVariants}
@@ -120,56 +140,71 @@ export default function AchievementsSection() {
           </p>
         </motion.div>
 
-        {/* Carousel Container */}
-        <div className="relative flex items-center justify-center gap-3 sm:gap-4 md:gap-6">
+        {/* Desktop: Carousel with side navigation */}
+        <div className="hidden md:flex relative items-center justify-center gap-6">
           <CarouselNavigation direction="prev" onClick={handlePrev} />
 
-          {/* Achievements Display */}
-          <div className="flex-1 overflow-hidden">
-            {/* Mobile: Single card */}
-            <div className="block md:hidden">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={achievements[currentIndex].id}
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -50 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <AchievementCard
-                    achievement={achievements[currentIndex]}
-                    isActive={true}
-                  />
-                </motion.div>
-              </AnimatePresence>
-            </div>
-
-            {/* Desktop: Multiple cards */}
-            <div className="hidden md:flex gap-4 lg:gap-6 justify-center">
-              {getVisibleAchievements().map((achievement, idx) => (
-                <motion.div
-                  key={achievement.id}
-                  className={`transition-all duration-500 ${
-                    idx === 0 ? "flex-1 max-w-sm" : "flex-1 max-w-xs"
-                  }`}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{
-                    opacity: idx === 0 ? 1 : 0.6,
-                    y: 0,
-                    scale: idx === 0 ? 1 : 0.95,
-                  }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <AchievementCard
-                    achievement={achievement}
-                    isActive={idx === 0}
-                  />
-                </motion.div>
-              ))}
-            </div>
+          <div className="flex-1 flex gap-4 lg:gap-6 justify-center overflow-hidden">
+            {getVisibleAchievements().map((achievement, idx) => (
+              <motion.div
+                key={achievement.id}
+                className={`transition-all duration-500 ${
+                  idx === 0 ? "flex-1 max-w-sm" : "flex-1 max-w-xs"
+                }`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{
+                  opacity: idx === 0 ? 1 : 0.6,
+                  y: 0,
+                  scale: idx === 0 ? 1 : 0.95,
+                }}
+                transition={{ duration: 0.5 }}
+              >
+                <AchievementCard
+                  achievement={achievement}
+                  isActive={idx === 0}
+                />
+              </motion.div>
+            ))}
           </div>
 
           <CarouselNavigation direction="next" onClick={handleNext} />
+        </div>
+
+        {/* Mobile: Swipeable card */}
+        <div className="md:hidden flex flex-col items-center">
+          <motion.div
+            className="w-full max-w-md mx-auto touch-pan-y"
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.2}
+            onDragEnd={handleDragEnd}
+          >
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={achievements[currentIndex].id}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.3 }}
+              >
+                <AchievementCard
+                  achievement={achievements[currentIndex]}
+                  isActive={true}
+                />
+              </motion.div>
+            </AnimatePresence>
+          </motion.div>
+
+          {/* Mobile: Navigation buttons below */}
+          <div className="flex items-center justify-center gap-6 mt-6">
+            <CarouselNavigation direction="prev" onClick={handlePrev} />
+            <CarouselNavigation direction="next" onClick={handleNext} />
+          </div>
+
+          {/* Swipe indicator */}
+          <p className="text-xs text-gray-400 mt-4 text-center">
+            Swipe left or right to browse
+          </p>
         </div>
 
         {/* Carousel Indicators */}
@@ -197,7 +232,6 @@ export default function AchievementsSection() {
   );
 }
 
-// Separate Achievement Card Component
 function AchievementCard({
   achievement,
   isActive,
@@ -277,5 +311,48 @@ function AchievementCard({
         </svg>
       </motion.div>
     </motion.a>
+  );
+}
+
+function CarouselNavigation({
+  direction,
+  onClick,
+}: {
+  direction: "prev" | "next";
+  onClick: () => void;
+}) {
+  return (
+    <motion.button
+      onClick={onClick}
+      className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all shadow-sm"
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.95 }}
+      aria-label={
+        direction === "prev" ? "Previous achievement" : "Next achievement"
+      }
+    >
+      <svg
+        className="w-5 h-5 sm:w-6 sm:h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        {direction === "prev" ? (
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M15 19l-7-7 7-7"
+          />
+        ) : (
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 5l7 7-7 7"
+          />
+        )}
+      </svg>
+    </motion.button>
   );
 }

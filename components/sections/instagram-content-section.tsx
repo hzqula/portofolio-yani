@@ -1,9 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import CarouselNavigation from "@/components/carousel-navigation";
-import { containerVariants, itemVariants } from "@/lib/animation-variants";
+import { motion, AnimatePresence, PanInfo } from "framer-motion";
 
 interface SocialPost {
   id: number;
@@ -65,6 +63,27 @@ const socialPosts: SocialPost[] = [
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+    },
+  },
+};
+
 export default function SocialContentSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hoveredId, setHoveredId] = useState<number | null>(null);
@@ -77,26 +96,31 @@ export default function SocialContentSection() {
     setCurrentIndex((prev) => (prev >= socialPosts.length - 3 ? 0 : prev + 1));
   };
 
+  const handleDragEnd = (event: any, info: PanInfo) => {
+    const swipeThreshold = 50;
+
+    if (info.offset.x > swipeThreshold) {
+      handlePrev();
+    } else if (info.offset.x < -swipeThreshold) {
+      handleNext();
+    }
+  };
+
   const getVisiblePosts = () => {
     const visible = [];
-    const count =
-      typeof window !== "undefined"
-        ? window.innerWidth < 640
-          ? 1
-          : window.innerWidth < 1024
-          ? 2
-          : 3
-        : 3;
-
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < 3; i++) {
       const index = (currentIndex + i) % socialPosts.length;
       visible.push(socialPosts[index]);
     }
     return visible;
   };
 
+  const getMobileVisiblePost = () => {
+    return socialPosts[currentIndex % socialPosts.length];
+  };
+
   return (
-    <section className="w-full h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 bg-white py-12 sm:py-0">
+    <section className="w-full min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 bg-white py-12">
       <motion.div
         className="w-full max-w-6xl"
         variants={containerVariants}
@@ -150,12 +174,11 @@ export default function SocialContentSection() {
           </div>
         </motion.div>
 
-        {/* Carousel Container */}
-        <div className="relative flex items-center justify-center gap-3 sm:gap-4 md:gap-6">
+        {/* Desktop: Grid with side navigation */}
+        <div className="hidden md:flex relative items-center justify-center gap-6">
           <CarouselNavigation direction="prev" onClick={handlePrev} />
 
-          {/* Grid Display - Responsive */}
-          <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 max-w-5xl mx-auto">
+          <div className="flex-1 grid grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
             <AnimatePresence mode="wait">
               {getVisiblePosts().map((post, idx) => (
                 <motion.div
@@ -164,6 +187,7 @@ export default function SocialContentSection() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.3, delay: idx * 0.05 }}
+                  className={idx === 2 ? "hidden lg:block" : ""}
                 >
                   <SocialPostCard
                     post={post}
@@ -179,34 +203,70 @@ export default function SocialContentSection() {
           <CarouselNavigation direction="next" onClick={handleNext} />
         </div>
 
+        {/* Mobile: Swipeable single card */}
+        <div className="md:hidden flex flex-col items-center">
+          <motion.div
+            className="w-full max-w-sm mx-auto touch-pan-y"
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.2}
+            onDragEnd={handleDragEnd}
+          >
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentIndex}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.3 }}
+              >
+                <SocialPostCard
+                  post={getMobileVisiblePost()}
+                  isHovered={false}
+                  onHoverStart={() => {}}
+                  onHoverEnd={() => {}}
+                />
+              </motion.div>
+            </AnimatePresence>
+          </motion.div>
+
+          {/* Mobile: Navigation buttons below */}
+          <div className="flex items-center justify-center gap-6 mt-6">
+            <CarouselNavigation direction="prev" onClick={handlePrev} />
+            <CarouselNavigation direction="next" onClick={handleNext} />
+          </div>
+
+          {/* Swipe indicator */}
+          <p className="text-xs text-gray-400 mt-4 text-center">
+            Swipe left or right to browse
+          </p>
+        </div>
+
         {/* Carousel Indicators */}
         <motion.div
           className="flex justify-center gap-2 mt-8 sm:mt-10"
           variants={itemVariants}
         >
-          {Array.from({ length: Math.ceil(socialPosts.length / 3) }).map(
-            (_, index) => (
-              <motion.button
-                key={index}
-                aria-label={`Go to page ${index + 1}`}
-                className={`h-1.5 sm:h-2 rounded-full transition-all duration-300 ${
-                  Math.floor(currentIndex / 3) === index
-                    ? "bg-black w-6 sm:w-8"
-                    : "bg-gray-300 w-1.5 sm:w-2 hover:bg-gray-400"
-                }`}
-                onClick={() => setCurrentIndex(index * 3)}
-                whileHover={{ scale: 1.2 }}
-                whileTap={{ scale: 0.9 }}
-              />
-            )
-          )}
+          {socialPosts.map((_, index) => (
+            <motion.button
+              key={index}
+              aria-label={`Go to post ${index + 1}`}
+              className={`h-1.5 sm:h-2 rounded-full transition-all duration-300 ${
+                index === currentIndex
+                  ? "bg-black w-6 sm:w-8"
+                  : "bg-gray-300 w-1.5 sm:w-2 hover:bg-gray-400"
+              }`}
+              onClick={() => setCurrentIndex(index)}
+              whileHover={{ scale: 1.2 }}
+              whileTap={{ scale: 0.9 }}
+            />
+          ))}
         </motion.div>
       </motion.div>
     </section>
   );
 }
 
-// Separate component for social post card
 function SocialPostCard({
   post,
   isHovered,
@@ -289,7 +349,47 @@ function SocialPostCard({
   );
 }
 
-// Instagram Icon Component
+function CarouselNavigation({
+  direction,
+  onClick,
+}: {
+  direction: "prev" | "next";
+  onClick: () => void;
+}) {
+  return (
+    <motion.button
+      onClick={onClick}
+      className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all shadow-sm"
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.95 }}
+      aria-label={direction === "prev" ? "Previous posts" : "Next posts"}
+    >
+      <svg
+        className="w-5 h-5 sm:w-6 sm:h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        {direction === "prev" ? (
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M15 19l-7-7 7-7"
+          />
+        ) : (
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 5l7 7-7 7"
+          />
+        )}
+      </svg>
+    </motion.button>
+  );
+}
+
 function InstagramIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="currentColor" viewBox="0 0 24 24">
@@ -298,7 +398,6 @@ function InstagramIcon({ className }: { className?: string }) {
   );
 }
 
-// TikTok Icon Component
 function TikTokIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="currentColor" viewBox="0 0 24 24">
