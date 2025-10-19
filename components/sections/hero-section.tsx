@@ -101,7 +101,7 @@ export default function HeroSection() {
         >
           <motion.button
             onClick={scrollToNext}
-            className="inline-flex items-center gap-2 px-6 sm:px-8 py-2.5 sm:py-3 bg-black text-white rounded-sm hover:bg-gray-800 active:bg-gray-900 transition-colors duration-300 font-medium text-sm sm:text-base shadow-md hover:shadow-lg w-full sm:w-auto"
+            className="inline-flex items-center gap-2 px-6 sm:px-8 py-2.5 sm:py-3 bg-black text-white rounded-sm hover:bg-gray-800 active:bg-gray-900 transition-colors duration-300 font-medium text-sm sm:text-base justify-center shadow-md hover:shadow-lg w-full sm:w-auto"
             aria-label="Scroll to next section"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -124,7 +124,7 @@ export default function HeroSection() {
 
           <motion.button
             onClick={downloadCV}
-            className="inline-flex items-center gap-2 px-6 sm:px-8 py-2.5 sm:py-3 bg-white text-black border-2 border-gray-300 rounded-sm hover:bg-gray-50 hover:border-gray-400 active:bg-gray-100 transition-colors duration-300 font-medium text-sm sm:text-base shadow-md hover:shadow-lg w-full sm:w-auto"
+            className="inline-flex items-center gap-2 px-6 sm:px-8 py-2.5 sm:py-3 bg-white text-black border-2 border-gray-300 rounded-sm hover:bg-gray-50 hover:border-gray-400 active:bg-gray-100 transition-colors duration-300 justify-center font-medium text-sm sm:text-base shadow-md hover:shadow-lg w-full sm:w-auto"
             aria-label="Download CV"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
