@@ -1,12 +1,41 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { containerVariants, itemVariants } from "@/lib/animation-variants";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+    },
+  },
+};
 
 export default function HeroSection() {
   const scrollToNext = () => {
-    // Dispatch custom event yang akan di-catch oleh page.tsx
     window.dispatchEvent(new CustomEvent("scrollToNext"));
+  };
+
+  const downloadCV = () => {
+    // Create a link element and trigger download
+    const link = document.createElement("a");
+    link.href = "/cv-ramadayani.pdf";
+    link.download = "ramadayani-cv.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -65,31 +94,57 @@ export default function HeroSection() {
           content that connects.
         </motion.p>
 
-        {/* CTA Button */}
-        <motion.button
-          onClick={scrollToNext}
-          className="inline-flex items-center gap-2 px-6 sm:px-8 py-2.5 sm:py-3 bg-black text-white rounded-sm hover:bg-gray-800 active:bg-gray-900 transition-colors duration-300 font-medium text-sm sm:text-base shadow-md hover:shadow-lg"
-          aria-label="Scroll to next section"
+        {/* CTA Buttons */}
+        <motion.div
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
           variants={itemVariants}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
         >
-          Explore My Work
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
+          <motion.button
+            onClick={scrollToNext}
+            className="inline-flex items-center gap-2 px-6 sm:px-8 py-2.5 sm:py-3 bg-black text-white rounded-sm hover:bg-gray-800 active:bg-gray-900 transition-colors duration-300 font-medium text-sm sm:text-base shadow-md hover:shadow-lg w-full sm:w-auto"
+            aria-label="Scroll to next section"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 14l-7 7m0 0l-7-7m7 7V3"
-            />
-          </svg>
-        </motion.button>
+            Explore My Work
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 14l-7 7m0 0l-7-7m7 7V3"
+              />
+            </svg>
+          </motion.button>
+
+          <motion.button
+            onClick={downloadCV}
+            className="inline-flex items-center gap-2 px-6 sm:px-8 py-2.5 sm:py-3 bg-white text-black border-2 border-gray-300 rounded-sm hover:bg-gray-50 hover:border-gray-400 active:bg-gray-100 transition-colors duration-300 font-medium text-sm sm:text-base shadow-md hover:shadow-lg w-full sm:w-auto"
+            aria-label="Download CV"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              />
+            </svg>
+            Download CV
+          </motion.button>
+        </motion.div>
 
         {/* Scroll Indicator - Hidden on mobile */}
         <motion.div
@@ -110,7 +165,6 @@ export default function HeroSection() {
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
             >
               <path
                 strokeLinecap="round"

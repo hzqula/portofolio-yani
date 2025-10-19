@@ -4,11 +4,11 @@ import { motion } from "framer-motion";
 import { containerVariants, itemVariants } from "@/lib/animation-variants";
 
 export default function ContactFooterSection() {
-  const whatsappNumber = "+6281234567890"; // Replace with actual WhatsApp number
+  const whatsappNumber = "+6282389053355"; // Replace with actual WhatsApp number
   const whatsappMessage =
     "Hi! I'm interested in collaborating with you. Let's connect!";
-  const email = "ramadayani@example.com";
-  const phone = "+62 812 3456 7890";
+  const email = "ramadayani550@gmail.com";
+  const phone = "+6282389053355";
 
   const handleWhatsAppClick = () => {
     const encodedMessage = encodeURIComponent(whatsappMessage);
