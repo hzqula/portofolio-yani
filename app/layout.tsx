@@ -26,7 +26,7 @@ const _sourceSerif_4 = V0_Font_Source_Serif_4({
 });
 
 export const metadata: Metadata = {
-  title: "Ramadayani's Por'tfolio",
+  title: "Ramadayani's Portfolio",
   description:
     "This is the personal portfolio website of Ramadayani, showcasing her work as a poet, MC, and content creator.",
 };
