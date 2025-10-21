@@ -14,43 +14,88 @@ interface Poem {
 const poems: Poem[] = [
   {
     id: 1,
-    title: "Echoes of Tomorrow",
+    title: "Kembali Merindu",
     excerpt:
       "In the silence between heartbeats, I find the words that shape my tomorrow...",
-    publicationDate: "October 2024",
-    googleDriveLink: "https://drive.google.com/file/d/example1",
+    publicationDate: "4 Januari 2024",
+    googleDriveLink:
+      " https://docs.google.com/document/d/1KPA5dh9b2g9feIene0ZarrC-bCQfH7Z1/edit?usp=drivesdk&ouid=118052189672788357030&rtpof=true&sd=true",
   },
   {
     id: 2,
-    title: "Urban Verses",
+    title: "Globalisasi Menguasai Bumi",
     excerpt:
       "The city speaks in rhythms only we can understand, a symphony of concrete and dreams...",
-    publicationDate: "September 2024",
-    googleDriveLink: "https://drive.google.com/file/d/example2",
+    publicationDate: "21 Oktober 2023",
+    googleDriveLink:
+      " https://docs.google.com/document/d/1uVvHRWDzQ0MLmbV_fhD-mshkz-aCbMvN/edit?usp=drivesdk&ouid=118052189672788357030&rtpof=true&sd=true",
   },
   {
     id: 3,
-    title: "Midnight Reflections",
+    title: "Ramadhan, Izinkan Aku Kembali Pulang",
     excerpt:
       "When the world sleeps, my pen awakens to capture the essence of solitude...",
-    publicationDate: "August 2024",
-    googleDriveLink: "https://drive.google.com/file/d/example3",
+    publicationDate: "28 Maret 2024",
+    googleDriveLink:
+      "https://drive.google.com/file/d/1aFdWupC5RTiusxiceU0xR9WNbaY5zROl/view?usp=drivesdk",
   },
   {
     id: 4,
-    title: "Voices Unheard",
+    title: "Rokan Hilir",
     excerpt:
       "Stories that demand to be told, voices that refuse to fade into silence...",
-    publicationDate: "July 2024",
-    googleDriveLink: "https://drive.google.com/file/d/example4",
+    publicationDate: "26 Oktober 2021",
+    googleDriveLink:
+      " https://docs.google.com/document/d/16wzDaVnruAZhlhpVm8Ih7dNhMY1mJOMG/edit?usp=drivesdk&ouid=118052189672788357030&rtpof=true&sd=true",
   },
   {
     id: 5,
-    title: "Fragments of Light",
+    title: "Maraknya Hoax Dan Framing Informasi Di Era Keuangan Digital",
     excerpt:
       "Collecting moments of beauty in a world that often forgets to look...",
-    publicationDate: "June 2024",
-    googleDriveLink: "https://drive.google.com/file/d/example5",
+    publicationDate: "30 April 2025",
+    googleDriveLink:
+      " https://www.riausatu.com/kolom/42915055148/maraknya-hoaks-dan-framing-informasi-di-era-keuangan-digital",
+  },
+  {
+    id: 6,
+    title:
+      "Studi Club Dinamika Publik UIN Suska Riau Gelar Diseminasi Hasil Penelitian",
+    excerpt:
+      "Collecting moments of beauty in a world that often forgets to look...",
+    publicationDate: "12 Juni 2025",
+    googleDriveLink:
+      "https://feis.uin-suska.ac.id/2025/06/12/study-club-dinamika-publik-uin-suska-riau-gelar-diseminasi-hasil-penelitian/",
+  },
+  {
+    id: 7,
+    title:
+      "Maulid Nabi Muhammad SAW 2023 Himpunan Mahasiswa Program Studi Administrasi Negara UIN Sultan Syarif Kasim Riau",
+    excerpt:
+      "Collecting moments of beauty in a world that often forgets to look...",
+    publicationDate: "7 Oktober 2023",
+    googleDriveLink:
+      "https://anafeis.uin-suska.ac.id/maulid-nabi-muhammad-saw-2023-himpunan-mahasiswa-program-studi-administrasi-negara-uin-sultan-syarif-kasim-riau/?fbclid=PAT01DUANgHLhleHRuA2FlbQIxMAABp9Yw2-urIuqJh-LITVa50WCxnR-sA1yJTpAmVee4GjQ4ey1NvxBASNQlVvzZ_aem_6J9qfwD7oGw1zDO_TNbxMg",
+  },
+  {
+    id: 8,
+    title:
+      "Perlombaan dalam Rangka Festival Ekonomi Syari’ah Nusantara 2023 Universitas Islam Negri Sultan Syarif Kasim Riau",
+    excerpt:
+      "Collecting moments of beauty in a world that often forgets to look...",
+    publicationDate: "23 September 2023",
+    googleDriveLink:
+      " https://anafeis.uin-suska.ac.id/press-release-perlombaan-dalam-rangka-festival-ekonomi-syariah-nusantara-2023-universitas-islam-negri-sultan-syarif-kasim-riau/?fbclid=PAT01DUANgHPpleHRuA2FlbQIxMAABpx4Jd5m25EYQi4cdePwXRhAGGTsswCCv2pvVlNRRJw7O-bWy3zWFGTiLLzoL_aem_g81jGhLECZjQ35RHYwAFrA",
+  },
+  {
+    id: 9,
+    title:
+      "Pengaruh Komunikasi dan Gaya Kepemimpinan Terhadap Kinerja Karyawan PT. Sewangi Sejati Luhur",
+    excerpt:
+      "Collecting moments of beauty in a world that often forgets to look...",
+    publicationDate: "10 Juni 2023",
+    googleDriveLink:
+      "https://journals.ukitoraja.ac.id/index.php/jesit/article/view/2549:",
   },
 ];
 
