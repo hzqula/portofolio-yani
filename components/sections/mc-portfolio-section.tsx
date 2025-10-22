@@ -22,7 +22,7 @@ const mcEvents: MCEvent[] = [
   },
   {
     id: 2,
-    title: "MC Forum Ta’ruf Administrasi Negara(FORTANA)",
+    title: "MC Forum Ta’ruf Administrasi Negara (FORTANA)",
     description:
       "Membentuk Administrator Muda Yang Berkualitas Dan Berorientasi Masa Depan Cemerlang",
     date: "23 September 2023",
@@ -30,18 +30,18 @@ const mcEvents: MCEvent[] = [
   },
   {
     id: 3,
-    title: "Mc Musyawarah Besar Himpunan Program Studi Administrasi Negara",
+    title: "MC Musyawarah Besar Himpunan Program Studi Administrasi Negara",
     description:
-      "Satukan Persepsi dan Tunjukkan Kebersamaan Menuju Kesepakatan Demi Membentuk Kepengurusan Yang Berintegritas",
+      "Satukan Persepsi dan Tunjukkan Kebersamaan Menuju Kesepakatan Demi Membentuk Kepengurusan yang Berintegritas",
     date: "30 Desember 2023",
     image: "/mc-3.jpg",
   },
   {
     id: 4,
     title:
-      "Moderator Forum Taaruf Mahasiswa Berprestasi Bidikmisi & KIP Kuliah (FORTAMADIKSI)",
+      "Moderator Forum Taaruf Mahasiswa Berprestasi Bidikmisi & KIP-Kuliah (FORTAMADIKSI)",
     description:
-      "Empowerment for change; merevitalisasi mahasiswa kip-kuliah dengan mengedepankan karakter Islami, intelektual, serta berdaya saing memasuki era society 5.0, Yang Ditaja Oleh Himpunan Formadiksi Uin Suska",
+      "Empowerment for change; merevitalisasi mahasiswa KIP-Kuliah dengan mengedepankan karakter islami, intelektual, serta berdaya saing memasuki era society 5.0, Yang Ditaja Oleh Himpunan Formadiksi UIN Suska Riau",
     date: "28 Februari 2024",
     image: "/mc-4.jpg",
   },
@@ -49,7 +49,7 @@ const mcEvents: MCEvent[] = [
     id: 5,
     title: "MC Sosialisasi Kode Etik Dosen Dan Mahasiswa",
     description:
-      "Sosialisasi Kode Etik Dosen Dan Mahasiswa, Ditaja Oleh Senat UIN Sultan Syarif Kasim",
+      "Sosialisasi Kode Etik Dosen dan Mahasiswa, Ditaja Oleh Senat UIN Suska Riau",
     date: "24 September 2024",
     image: "/mc-5.jpg",
   },
@@ -58,7 +58,7 @@ const mcEvents: MCEvent[] = [
     id: 6,
     title: "MC Sosialisasi Pemilih Pemula",
     description:
-      "Sosialisasi Pemilih Pemula ditaja oleh prodi administrasi negara dan laborotarium policy and governance reform (PGR)",
+      "Sosialisasi Pemilih Pemula ditaja oleh Prodi Administrasi Negara dan Laboratorium Policy and Governance Reform (PGR)",
     date: "4 Januari 2024",
     image: "/mc-6.jpg",
   },
@@ -66,7 +66,7 @@ const mcEvents: MCEvent[] = [
     id: 7,
     title: "Moderator Prolog Leadership & Upgrading",
     description:
-      "Membangun Jiwa Kepemimpinan Dan Berkarakter Sebagai Formakip-K Uin Suska Riau Untuk Menuju Agen Of Change yang Ditaja Oleh Himpunan Formakipk Uin Suska",
+      "Membangun Jiwa Kepemimpinan Dan Berkarakter Sebagai Forma-KIPK UIN Suska Riau Untuk Menuju Agent Of Change yang Ditaja Oleh Himpunan Forma-KIPK UIN Suska Riau",
     date: "23 November 2024",
     image: "/mc-7.jpg",
   },
