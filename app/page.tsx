@@ -20,7 +20,6 @@ export default function Home() {
     { id: "mc-portfolio", component: MCPortfolioSection },
     { id: "poetry", component: PoetryWorksSection },
     { id: "instagram", component: InstagramContentSection },
-    { id: "achievements", component: AchievementsSection },
     { id: "contact", component: ContactFooterSection },
   ];
 
