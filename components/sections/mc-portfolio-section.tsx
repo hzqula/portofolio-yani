@@ -14,33 +14,61 @@ interface MCEvent {
 const mcEvents: MCEvent[] = [
   {
     id: 1,
-    title: "Summer Festival 2024",
+    title: "MC Milad Prodi Ilmu Administrasi Negara",
     description:
-      "Headlining performance at the annual summer music festival with 5000+ attendees",
-    image: "/mc-performance-stage-festival.jpg",
-    date: "June 2024",
+      "Mempererat Kebersamaan Dalam Mewujudkan Mimpi Menuju Perubahan Administrator Yang Kreatif Yang Inovatif",
+    date: "23 Mei 2023",
+    image: "/mc-1.jpg",
   },
   {
     id: 2,
-    title: "Urban Beats Conference",
+    title: "MC Forum Ta’ruf Administrasi Negara(FORTANA)",
     description:
-      "Live performance and panel discussion on hip-hop culture and poetry",
-    image: "/mc-conference-performance.jpg",
-    date: "May 2024",
+      "Membentuk Administrator Muda Yang Berkualitas Dan Berorientasi Masa Depan Cemerlang",
+    date: "23 September 2023",
+    image: "/mc-2.jpg",
   },
   {
     id: 3,
-    title: "Poetry Slam Championship",
-    description: "Winning performance at the national poetry slam championship",
-    image: "/poetry-slam-stage-performance.jpg",
-    date: "April 2024",
+    title: "Mc Musyawarah Besar Himpunan Program Studi Administrasi Negara",
+    description:
+      "Satukan Persepsi dan Tunjukkan Kebersamaan Menuju Kesepakatan Demi Membentuk Kepengurusan Yang Berintegritas",
+    date: "30 Desember 2023",
+    image: "/mc-3.jpg",
   },
   {
     id: 4,
-    title: "Intimate Venue Show",
-    description: "Acoustic performance at the historic downtown theater",
-    image: "/intimate-concert-venue.jpg",
-    date: "March 2024",
+    title:
+      "Moderator Forum Taaruf Mahasiswa Berprestasi Bidikmisi & KIP Kuliah (FORTAMADIKSI)",
+    description:
+      "Empowerment for change; merevitalisasi mahasiswa kip-kuliah dengan mengedepankan karakter Islami, intelektual, serta berdaya saing memasuki era society 5.0, Yang Ditaja Oleh Himpunan Formadiksi Uin Suska",
+    date: "28 Februari 2024",
+    image: "/mc-4.jpg",
+  },
+  {
+    id: 5,
+    title: "MC Sosialisasi Kode Etik Dosen Dan Mahasiswa",
+    description:
+      "Sosialisasi Kode Etik Dosen Dan Mahasiswa, Ditaja Oleh Senat UIN Sultan Syarif Kasim",
+    date: "24 September 2024",
+    image: "/mc-5.jpg",
+  },
+
+  {
+    id: 6,
+    title: "MC Sosialisasi Pemilih Pemula",
+    description:
+      "Sosialisasi Pemilih Pemula ditaja oleh prodi administrasi negara dan laborotarium policy and governance reform (PGR)",
+    date: "4 Januari 2024",
+    image: "/mc-6.jpg",
+  },
+  {
+    id: 7,
+    title: "Moderator Prolog Leadership & Upgrading",
+    description:
+      "Membangun Jiwa Kepemimpinan Dan Berkarakter Sebagai Formakip-K Uin Suska Riau Untuk Menuju Agen Of Change yang Ditaja Oleh Himpunan Formakipk Uin Suska",
+    date: "23 November 2024",
+    image: "/mc-7.jpg",
   },
 ];
 
