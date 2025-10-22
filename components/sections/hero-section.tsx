@@ -64,7 +64,7 @@ export default function HeroSection() {
             transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
           >
             <img
-              src="/professional-portrait-poet-mc.jpg"
+              src="/profile.jpg"
               alt="Ramadayani Profile"
               className="w-full h-full object-cover"
             />
