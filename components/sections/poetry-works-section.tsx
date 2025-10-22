@@ -168,10 +168,10 @@ export default function PoetryWorksSection() {
           variants={itemVariants}
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-2 sm:mb-4">
-            Poetry Works
+            My Writings
           </h2>
           <p className="text-gray-600 text-sm sm:text-base md:text-lg">
-            A collection of published poems and verses
+            A collection of my written works
           </p>
         </motion.div>
 
@@ -277,10 +277,6 @@ function PoemCard({ poem, isActive }: { poem: Poem; isActive: boolean }) {
         {poem.title}
       </h3>
 
-      <p className="text-gray-600 text-sm sm:text-base leading-relaxed mb-4 sm:mb-6 flex-1 line-clamp-3 sm:line-clamp-4">
-        {poem.excerpt}
-      </p>
-
       <div className="space-y-3 sm:space-y-4 pt-3 sm:pt-4 border-t border-gray-200">
         <p className="text-xs text-gray-500 uppercase tracking-wide">
           Published {poem.publicationDate}
@@ -295,7 +291,7 @@ function PoemCard({ poem, isActive }: { poem: Poem; isActive: boolean }) {
           whileHover={{ x: 5 }}
           whileTap={{ scale: 0.98 }}
         >
-          Read Full Poem
+          Read Full
           <svg
             className="w-4 h-4 transition-transform group-hover:translate-x-1"
             fill="none"
