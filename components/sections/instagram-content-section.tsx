@@ -129,11 +129,11 @@ export default function SocialContentSection() {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
 
   const handlePrev = () => {
-    setCurrentIndex((prev) => (prev === 0 ? socialPosts.length - 3 : prev - 1));
+    setCurrentIndex((prev) => (prev === 0 ? socialPosts.length - 1 : prev - 1));
   };
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev >= socialPosts.length - 3 ? 0 : prev + 1));
+    setCurrentIndex((prev) => (prev >= socialPosts.length - 1 ? 0 : prev + 1));
   };
 
   const handleDragEnd = (event: any, info: PanInfo) => {
