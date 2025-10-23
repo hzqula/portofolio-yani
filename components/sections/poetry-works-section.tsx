@@ -95,7 +95,7 @@ const poems: Poem[] = [
       "Collecting moments of beauty in a world that often forgets to look...",
     publicationDate: "10 Juni 2023",
     googleDriveLink:
-      "https://journals.ukitoraja.ac.id/index.php/jesit/article/view/2549:",
+      "https://journals.ukitoraja.ac.id/index.php/jesit/article/view/2549",
   },
 ];
 
